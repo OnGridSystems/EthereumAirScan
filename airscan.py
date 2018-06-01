@@ -87,6 +87,7 @@ class EtherScanParser():
             if start_block == prev_start_block + 1:
                 return
 
+"""
 class Web3Walker():
     def __init__(self, db_session, w3):
         self.sess = db_session
@@ -110,5 +111,5 @@ class Web3Walker():
         self.update_eth_balance(holder)
         self.update_tx_count(holder)
         self.update_code_size(holder)
-
+"""
 
