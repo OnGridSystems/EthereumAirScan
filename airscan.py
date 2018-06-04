@@ -4,6 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from requests import get
 from datetime import datetime
+from time import sleep
 from web3 import Web3
 
 
@@ -45,7 +46,17 @@ class EtherScanParser():
 
     def populate_addresses_from_transfer_logs_by_block_interval(self, from_block, to_block):
         result = []
-        response = get("https://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=%s&toBlock=%s&address=%s&topic0=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef" % (from_block, to_block, self.token.address)).json()
+        for i in range(0, 100):
+            while True:
+                try:
+                    response = get(
+                        "https://api.etherscan.io/api?module=logs&action=getLogs&fromBlock=%s&toBlock=%s&address=%s&topic0=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef" % (
+                        from_block, to_block, self.token.address)).json()
+                except Exception as e:
+                    sleep(10)
+                    print("Error polling etherscan %s" % e)
+                    continue
+                break
         if response["message"] == "OK":
             for log_entry in response["result"]:
                 timestamp = datetime.fromtimestamp(int(log_entry["timeStamp"], 16))

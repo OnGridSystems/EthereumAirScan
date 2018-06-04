@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from datetime import date
 from web3 import Web3, HTTPProvider
-from airscan import Base, EtherScanParser, Holder, Web3Walker, Token
+from airscan import Base, EtherScanParser, Holder, Token
 
 #w3 = Web3(HTTPProvider("https://mainnet.infura.io/"))
 
